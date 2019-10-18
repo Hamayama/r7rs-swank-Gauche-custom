@@ -38,7 +38,7 @@
   |<div align="center">機能</div>|<div align="center">Lem エディタのコマンド</div>|<div align="center">r7rs-swank</div>|<div align="center">r7rs-swank-Gauche-custom</div>|
   |---|---|---|---|
   |repl の起動           |M-x scheme-slime                          |○     |○(※1)|
-  |ファイルのロード      |M-x scheme-load-file (C-c C-l)            |×(※2)|○     |
+  |ファイルのロード<br>(repl へのロード)|M-x scheme-load-file (C-c C-l)|×(※2)|○     |
   |シンボルの補完        |M-x indent-line-and-complete-symbol (Tab) |○     |○     |
   |autodoc による関数シグネチャ<br>のミニバッファへの自動表示|-     |△(※3)|△(※3)|
   |マクロの展開          |M-x scheme-macroexpand-all (C-c M-m)      |△(※4)|△(※5)|
