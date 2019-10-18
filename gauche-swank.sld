@@ -16,7 +16,10 @@
                 sys-getpid gauche-version
                 ;; for Gauche custom (postlude)
                 with-module with-input-from-port consume-trailing-whitespaces)
-          (only (gauche net) make-server-socket socket-accept socket-input-port socket-output-port)
+          (only (gauche net)
+                make-server-socket socket-accept socket-input-port socket-output-port
+                ;; for Gauche custom
+                make-sockaddrs)
           (gauche pputil)
           (gauche interactive) ; for Gauche custom
           (only (srfi-13) string-contains string-prefix? string-replace)
@@ -28,6 +31,7 @@
     ;;   #f      : return noraml result
     ;;   'string : return string literal made by pprint
     (define *macroexpand-result* 'string)
+    (define *server-host-name*   "127.0.0.1")
     )
 
   (include "specific/gauche.scm")

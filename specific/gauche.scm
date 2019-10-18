@@ -43,7 +43,10 @@
 
 (define ($open-tcp-server port-number port-file handler)
   (let* ((n (or port-number (+ 10000 (random-integer 50000))))
-         (socket (make-server-socket 'inet n ':reuse-addr? #t)))
+         ;; for Gauche custom
+         ;(socket (make-server-socket 'inet n ':reuse-addr? #t))
+         (socket (make-server-socket (car (make-sockaddrs *server-host-name* n))))
+         )
     (handler n socket)))
 
 (define ($tcp-server-accept socket handler)
