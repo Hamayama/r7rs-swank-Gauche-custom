@@ -38,7 +38,7 @@
   |<div align="center">機能</div>|<div align="center">Lem エディタのコマンド</div>|<div align="center">r7rs-swank</div>|<div align="center">r7rs-swank-Gauche-custom</div>|
   |---|---|---|---|
   |repl の起動           |M-x scheme-slime                          |○     |○(※1)|
-  |ファイルのロード      |M-x scheme-load-file (C-c C-l)            |△(※2)|○     |
+  |ファイルのロード      |M-x scheme-load-file (C-c C-l)            |×(※2)|○     |
   |シンボルの補完        |M-x indent-line-and-complete-symbol (Tab) |○     |○     |
   |autodoc による関数シグネチャ<br>のミニバッファへの自動表示|-     |△(※3)|△(※3)|
   |マクロの展開          |M-x scheme-macroexpand-all (C-c M-m)      |△(※4)|△(※5)|
@@ -51,7 +51,7 @@
   |参照情報の一覧表示 (xref?)|-                                     |×     |×     |
   |ローカル環境の情報取得|-                                         |×     |×     |
   |インデント情報の更新  |-                                         |×     |×     |
-  |カレントライブラリの切り換え|M-x scheme-set-library (C-c M-p)    |×     |○(※8)|
+  |カレントライブラリの切り換え|M-x scheme-set-library (C-c M-p)    |×     |△(※8)|
   |repl の interrupt     |-                                         |×     |×     |
   
   ○:対応  
@@ -65,7 +65,7 @@
   (※5) pprint の結果を受け取ることで、ある程度改行されるようになった  
   (※6) 説明は表示されないが、bind 情報だけは表示される  
   (※7) 一部のグローバルな手続きのみ対応 (プリコンパイルされたものは不可)  
-  (※8) 入力は R7RS 形式 (最外の括弧は省略可) と Gauche のモジュール (ドット区切り) の両方を受け付ける
+  (※8) repl バッファのみ対応。入力は R7RS 形式 (最外の括弧は省略可) と Gauche のモジュール (ドット区切り) の両方を受け付ける
 
 
 ## 環境等
@@ -79,6 +79,7 @@
 
 ## 履歴
 - 2019-10-17 v1.00 (初版)
+- 2019-10-18 v1.01 swank:connection-info の応答見直し等
 
 
-(2019-10-17)
+(2019-10-18)

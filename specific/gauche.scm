@@ -1,14 +1,15 @@
 (define ($scheme-name)
   "gauche-scheme")
 
-;; convert Gauche's module name to R7RS's library name
-;;  (symbol -> symbol
-;;    e.g. scheme.base    ==> (scheme base)
-;;         scheme..base   ==> (scheme.base)
-;;         scheme...base  ==> (scheme. base)
-;;         scheme....base ==> (scheme..base)
-;;         scheme.base.   ==> (scheme base)
-;;         scheme.base..  ==> (scheme base.) )
+;; for Gauche custom
+;;  convert Gauche's module name to R7RS's library name
+;;   (symbol -> symbol
+;;     e.g. scheme.base    ==> (scheme base)
+;;          scheme..base   ==> (scheme.base)
+;;          scheme...base  ==> (scheme. base)
+;;          scheme....base ==> (scheme..base)
+;;          scheme.base.   ==> (scheme base)
+;;          scheme.base..  ==> (scheme base.) )
 (define (module-name->library-name name)
   (let loop ((ret '())
              (lis (string-split (x->string name) ".")))
@@ -27,12 +28,14 @@
       (loop ret (cdr lis))))))
 
 (define ($macroexpand-1 form)
+  ;; for Gauche custom
   (if (eq? *macroexpand-result* 'string)
     (with-output-to-string
       (lambda () (pprint (macroexpand-1 form))))
     (macroexpand-1 form)))
 
 (define ($macroexpand-all form)
+  ;; for Gauche custom
   (if (eq? *macroexpand-result* 'string)
     (with-output-to-string
       (lambda () (pprint (macroexpand-all form))))
@@ -48,10 +51,9 @@
     (handler (socket-input-port cs) (socket-output-port cs))))
 
 (define ($all-package-names)
+  ;; for Gauche custom
   ;(map module-name (all-modules))
-  (map (lambda (m)
-         (x->string (module-name->library-name (module-name m))))
-       (all-modules)))
+  (map (lambda (m) ($environment-name m)) (all-modules)))
 
 (define (display-to-string val)
   (let ((out (open-output-string)))
@@ -90,15 +92,21 @@
 
 (define env (interaction-environment))
 
+(define ($environment name)
+  ;; for Gauche custom
+  ;;  name might be #f
+  env)
+
+;; for Gauche custom
+(define ($environment-name env)
+  (x->string (module-name->library-name (module-name env))))
+
 (define ($set-package name)
+  ;; for Gauche custom
   ;(list "(user)" "(user)"))
   (set! env (find-module (library-name->module-name
                           (with-input-from-string name read))))
-  (list (x->string (module-name->library-name (module-name env)))
-        (x->string (module-name->library-name (module-name env)))))
-
-(define ($environment name)
-  env)
+  (list ($environment-name env) ($environment-name env)))
 
 (define ($condition-trace condition)
   '())

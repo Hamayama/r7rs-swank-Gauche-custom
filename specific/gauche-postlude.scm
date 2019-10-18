@@ -1,5 +1,6 @@
 
-;; support toplevel commands (e.g. ,h)
+;; for Gauche custom
+;;  support toplevel commands (e.g. ,a)
 (define (%read port)
   (with-input-from-port port
     ((with-module gauche.interactive make-repl-reader)
@@ -11,7 +12,8 @@
            line)))
      consume-trailing-whitespaces)))
 
-;; overwrite read-all procedure in base.scm
+;; for Gauche custom
+;;  overwrite read-all procedure in base.scm
 (define (read-all port)
   (let loop ((result '())
              (form (%read port)))

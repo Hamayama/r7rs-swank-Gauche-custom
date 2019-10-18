@@ -17,15 +17,28 @@
                  ,id)))))
 
 (define-slime-handler (swank:connection-info)
-  `(:pid 123
-         :style :spawn
-         :encoding (:coding-systems ("utf-8-unix"))
-         :lisp-implementation (:type "Scheme" :name ,($scheme-name) :version 123 :program "/usr/bin/scheme")
-         :machine (:instance "host" :type "X86-64")
-         :features (:swank)
-         :modules ("SWANK-ARGLISTS" "SWANK-REPL" "SWANK-PRESENTATIONS")
-         :package (:name "(user)" :prompt "(user)")
-         :version "2.24"))
+  ;; for Gauche custom
+  (cond-expand
+   (gauche
+    `(:pid ,(sys-getpid)
+           :style :spawn
+           :encoding (:coding-systems ("utf-8-unix"))
+           :lisp-implementation (:type "Scheme" :name ,($scheme-name) :version ,(gauche-version) :program "gosh")
+           :machine (:instance "host" :type "X86-64")
+           :features (:swank)
+           :modules ("SWANK-ARGLISTS" "SWANK-REPL" "SWANK-PRESENTATIONS")
+           :package (:name ,($environment-name ($environment #f)) :prompt ,($environment-name ($environment #f)))
+           :version "2.24"))
+   (else
+    `(:pid 123
+           :style :spawn
+           :encoding (:coding-systems ("utf-8-unix"))
+           :lisp-implementation (:type "Scheme" :name ,($scheme-name) :version 123 :program "/usr/bin/scheme")
+           :machine (:instance "host" :type "X86-64")
+           :features (:swank)
+           :modules ("SWANK-ARGLISTS" "SWANK-REPL" "SWANK-PRESENTATIONS")
+           :package (:name "(user)" :prompt "(user)")
+           :version "2.24"))))
 
 (define-slime-handler (swank:swank-require packages)
   '())
@@ -45,7 +58,7 @@
   ;; for Gauche custom
   (cond-expand
    (gauche
-    ($set-package env))
+    (list ($environment-name ($environment #f)) ($environment-name ($environment #f))))
    (else
     (list "(user)" "(user)"))))
 

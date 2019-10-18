@@ -13,6 +13,7 @@
                 push! x->string string-split with-input-from-string
                 find-module library-name->module-name
                 source-location sys-dirname sys-basename
+                sys-getpid gauche-version
                 ;; for Gauche custom (postlude)
                 with-module with-input-from-port consume-trailing-whitespaces)
           (only (gauche net) make-server-socket socket-accept socket-input-port socket-output-port)
