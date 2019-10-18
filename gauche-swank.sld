@@ -1,3 +1,10 @@
+;;
+;; gauche-swank.sld
+;; 2019-10-18 v1.03
+;;
+;; customized for Gauche ( https://github.com/Hamayama/r7rs-swank-Gauche-custom )
+;; ( the original is https://github.com/ecraven/r7rs-swank )
+;;
 (define-library (gauche-swank)
   (export start-swank
           swank:lookup-presented-object
