@@ -1,6 +1,6 @@
 ;;
 ;; gauche-swank.sld
-;; 2019-10-18 v1.03
+;; 2019-10-19 v1.04
 ;;
 ;; customized for Gauche ( https://github.com/Hamayama/r7rs-swank-Gauche-custom )
 ;; ( the original is https://github.com/ecraven/r7rs-swank )
@@ -35,7 +35,7 @@
   ;; for Gauche custom
   (begin
     ;; *macroexpand-result*
-    ;;   #f      : return noraml result
+    ;;   #f      : return normal result
     ;;   'string : return string literal made by pprint
     (define *macroexpand-result* 'string)
     (define *server-host-name*   "127.0.0.1")

@@ -3,7 +3,7 @@
 
 ;; for Gauche custom
 ;;  convert Gauche's module name to R7RS's library name
-;;   (symbol -> symbol
+;;   (symbol -> expr
 ;;     e.g. scheme.base    ==> (scheme base)
 ;;          scheme..base   ==> (scheme.base)
 ;;          scheme...base  ==> (scheme. base)
@@ -27,8 +27,15 @@
       (push! ret (car lis))
       (loop ret (cdr lis))))))
 
+;; for Gauche custom
+;;  get environment name
+;;   (env -> string)
+(define ($environment-name env)
+  (x->string (module-name->library-name (module-name env))))
+
 (define ($macroexpand-1 form)
   ;; for Gauche custom
+  ;(macroexpand-1 form))
   (if (eq? *macroexpand-result* 'string)
     (with-output-to-string
       (lambda () (pprint (macroexpand-1 form))))
@@ -36,6 +43,7 @@
 
 (define ($macroexpand-all form)
   ;; for Gauche custom
+  ;(macroexpand-all form))
   (if (eq? *macroexpand-result* 'string)
     (with-output-to-string
       (lambda () (pprint (macroexpand-all form))))
@@ -44,9 +52,8 @@
 (define ($open-tcp-server port-number port-file handler)
   (let* ((n (or port-number (+ 10000 (random-integer 50000))))
          ;; for Gauche custom
-         ;(socket (make-server-socket 'inet n ':reuse-addr? #t))
-         (socket (make-server-socket (car (make-sockaddrs *server-host-name* n))))
-         )
+         ;(socket (make-server-socket 'inet n ':reuse-addr? #t)))
+         (socket (make-server-socket (car (make-sockaddrs *server-host-name* n)))))
     (handler n socket)))
 
 (define ($tcp-server-accept socket handler)
@@ -55,8 +62,8 @@
 
 (define ($all-package-names)
   ;; for Gauche custom
-  ;(map module-name (all-modules))
-  (map (lambda (m) ($environment-name m)) (all-modules)))
+  ;(map module-name (all-modules)))
+  (map $environment-name (all-modules)))
 
 (define (display-to-string val)
   (let ((out (open-output-string)))
@@ -99,10 +106,6 @@
   ;; for Gauche custom
   ;;  name might be #f
   env)
-
-;; for Gauche custom
-(define ($environment-name env)
-  (x->string (module-name->library-name (module-name env))))
 
 (define ($set-package name)
   ;; for Gauche custom

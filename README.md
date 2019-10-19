@@ -20,7 +20,7 @@
   (setf lem-scheme-mode:*scheme-swank-server-run-command*
         '("gosh" "-AC:/work/r7rs-swank-Gauche-custom" "-e(begin (import (gauche-swank)) (start-swank ,port))"))
   ```
-  **(※) 上記の -A オプションの部分には、展開したフォルダのパスを指定してください。**
+  **(※) 上記設定の -A オプションの部分には、展開したフォルダのパスを指定してください。**
 
 
 ## 使い方
@@ -82,6 +82,7 @@
 - 2019-10-18 v1.01 swank:connection-info の応答見直し等
 - 2019-10-18 v1.02 サーバソケットの設定見直し(Lemに合わせた)
 - 2019-10-18 v1.03 コメント追加
+- 2019-10-19 v1.04 一部処理見直し等
 
 
-(2019-10-18)
+(2019-10-19)
