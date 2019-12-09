@@ -84,6 +84,7 @@
 - 2019-10-18 v1.03 コメント追加
 - 2019-10-19 v1.04 一部処理見直し等
 - 2019-11-26 v1.05 Gauche v0.9.9_pre2対応(hash-table-for-eachの所属モジュールが変わった)
+- 2019-12-9  v1.06 Gauche v0.9.9_rc2対応(https://github.com/ecraven/r7rs-swank/pull/12)
 
 
-(2019-11-26)
+(2019-12-9)

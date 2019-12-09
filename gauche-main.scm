@@ -1,6 +1,11 @@
 
-;; WARNING: if you use this file, macroexpand-all function doesn't work.
+;; WARNING: if you use this file, macroexpand-all function might not work.
 
 (add-load-path "." :relative)
+
+;; 'load' before 'import' enables to output stack trace on error.
+(load "gauche-swank")
+
 (import (gauche-swank))
+
 (start-swank 4010)
