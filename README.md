@@ -68,6 +68,14 @@
   (※8) repl バッファのみ対応。入力は R7RS 形式 (最外の括弧は省略可) と Gauche のモジュール (ドット区切り) の両方を受け付ける
 
 
+## 参考情報
+1. Gauche:Lemエディタ  
+   https://practical-scheme.net/wiliki/wiliki.cgi?Gauche%3ALem%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF
+
+2. Lem エディタの scheme-mode  
+   https://gist.github.com/Hamayama/03eb1c2984abc2ddb7a1c04d15e1bd32
+
+
 ## 環境等
 - OS
   - Windows 8.1 (64bit)
@@ -88,4 +96,4 @@
 - 2020-1-22  v1.07 ハンドラ追加(swank:interactive-eval-region)
 
 
-(2020-1-22)
+(2020-1-23)
