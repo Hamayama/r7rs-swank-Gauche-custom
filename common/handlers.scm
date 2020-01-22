@@ -396,3 +396,7 @@
         `((,name (:error "not found")))))))
  (else))
 
+;; for Gauche custom
+(define-slime-handler (swank:interactive-eval-region form)
+  ((find-handler 'swank:interactive-eval) form))
+
