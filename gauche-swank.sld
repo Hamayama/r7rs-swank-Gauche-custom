@@ -21,6 +21,7 @@
                 find-module library-name->module-name
                 source-location sys-dirname sys-basename
                 sys-getpid gauche-version
+                report-error string-scan
                 ;; for Gauche custom (postlude)
                 with-module
                 with-input-from-port consume-trailing-whitespaces)
@@ -36,11 +37,19 @@
 
   ;; for Gauche custom
   (begin
-    ;; *macroexpand-result*
-    ;;   #f      : return normal result
-    ;;   'string : return string literal made by pprint
-    (define *macroexpand-result* 'string)
+    ;; settings
+    ;;  *server-host-name*
+    ;;    server host name or ip address string
+    ;;  *macroexpand-result*
+    ;;    #f       : return normal result
+    ;;    'string  : return string literal made by pprint
+    ;;  *error-output-type*
+    ;;    #f       : output only error-message
+    ;;    'report  : use report-error
+    ;;    'report2 : use report-error without stack-trace
     (define *server-host-name*   "127.0.0.1")
+    (define *macroexpand-result* 'string)
+    (define *error-output-type*  'report2)
     )
 
   (include "specific/gauche.scm")

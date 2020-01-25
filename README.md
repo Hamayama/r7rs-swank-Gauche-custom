@@ -80,6 +80,7 @@
 - OS
   - Windows 8.1 (64bit)
 - 言語
+  - Gauche v0.9.9
   - Gauche v0.9.8
 - ライセンス
   - オリジナルと同様とします
@@ -94,6 +95,7 @@
 - 2019-11-26 v1.05 Gauche v0.9.9_pre2対応(hash-table-for-eachの所属モジュールが変わった)
 - 2019-12-9  v1.06 Gauche v0.9.9_rc2対応(https://github.com/ecraven/r7rs-swank/pull/12)
 - 2020-1-22  v1.07 ハンドラ追加(swank:interactive-eval-region)
+- 2020-1-25  v1.08 エラー出力見直し
 
 
-(2020-1-23)
+(2020-1-25)

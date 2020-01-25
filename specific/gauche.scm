@@ -71,9 +71,18 @@
     (get-output-string out)))
 
 (define ($error-description error)
-  (apply string-append (error-object-message error)
-                 ": "
-                 (map write-to-string (error-object-irritants error))))
+  ;; for Gauche custom
+  (case *error-output-type*
+    ((report)
+     (report-error error #f))
+    ((report2)
+     (let* ((str1 (report-error error #f))
+            (str2 (string-scan str1 "\nStack Trace:" 'before)))
+       (or str2 str1)))
+    (else
+     (apply string-append (error-object-message error)
+            ": "
+            (map write-to-string (error-object-irritants error))))))
 
 ;; required for older gauche which treats keywords distinct from symbols
 (define (symbol->string x)
@@ -88,7 +97,10 @@
   ;; basic implementation, print all output at the end, this should
   ;; be replaced with a custom output port
   (let ((o (open-output-string)))
-    (parameterize ((current-output-port o))
+    ;; for Gauche custom
+    ;(parameterize ((current-output-port o))
+    (parameterize ((current-output-port o)
+                   (current-error-port  o))
       (let-values ((x (thunk)))
         (swank/write-string (get-output-string o) #f)
         (apply values x)))))
