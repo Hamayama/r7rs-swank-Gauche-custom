@@ -145,20 +145,23 @@
 (define ($handle-condition exception)
   #f)
 
-(define (string-match-forward a b)
-  (let* ((a-len (string-length a))
-         (b-len (string-length b))
-         (min-len (min a-len b-len)))
-    (let loop ((i 0))
-      (if (> i min-len)
-          (- i 1)
-          (if (string=? (substring a 0 i) (substring b 0 i))
-              (loop (+ i 1))
-              (- i 1))))))
+;; for Gauche custom
+;(define (string-match-forward a b)
+;  (let* ((a-len (string-length a))
+;         (b-len (string-length b))
+;         (min-len (min a-len b-len)))
+;    (let loop ((i 0))
+;      (if (> i min-len)
+;          (- i 1)
+;          (if (string=? (substring a 0 i) (substring b 0 i))
+;              (loop (+ i 1))
+;              (- i 1))))))
 (define (longest-common-prefix strings)
   (if (null? strings)
       ""
-      (fold (lambda (s1 s2) (substring s2 0 (string-match-forward s1 s2))) (car strings) (cdr strings))))
+      ;; for Gauche custom
+      ;(fold (lambda (s1 s2) (substring s2 0 (string-match-forward s1 s2))) (car strings) (cdr strings))))
+      (fold (lambda (s1 s2) (substring s2 0 (string-prefix-length s1 s2))) (car strings) (cdr strings))))
 (define ($completions prefix env-name)
   (let ((result '()))
     (define (search m)
@@ -171,7 +174,10 @@
                 (module-imports mod))
       (for-each search
                 (module-precedence-list mod))
-      
+
+      ;; for Gauche custom
+      (set! result (delete-duplicates (sort result string<?)))
+
       (cons result
             (longest-common-prefix result)))))
 
@@ -206,6 +212,10 @@
                 (module-imports mod))
       (for-each search
                 (module-precedence-list mod))
-      
+
+      ;; for Gauche custom
+      (set! result (delete-duplicates
+                    (sort result string<? (lambda (item) (x->string (car item))))))
+
       result)))
 

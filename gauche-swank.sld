@@ -22,6 +22,7 @@
                 source-location sys-dirname sys-basename
                 sys-getpid gauche-version
                 report-error string-scan
+                sort delete-duplicates
                 ;; for Gauche custom (postlude)
                 with-module
                 with-input-from-port consume-trailing-whitespaces)
@@ -32,7 +33,10 @@
                 make-sockaddrs)
           (gauche pputil)
           (gauche interactive) ; for Gauche custom
-          (only (srfi-13) string-contains string-prefix? string-replace)
+          (only (srfi-13)
+                string-contains string-prefix? string-replace
+                ;; for Gauche custom
+                string-prefix-length)
           (only (srfi-1) find fold list-index cons* filter))
 
   ;; for Gauche custom
