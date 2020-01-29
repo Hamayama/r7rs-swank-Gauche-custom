@@ -15,7 +15,7 @@
 - 本サイト ( https://github.com/Hamayama/r7rs-swank-Gauche-custom ) のソースを、  
   (Download Zip ボタン等で) ダウンロードして、適当なフォルダに展開してください。
 
-- そして、Lem エディタの設定ファイル ~/.lem/init.lisp 内に、以下の記述を追加してください。
+- そして、Lem エディタの設定ファイル ~/.lem/init.lisp 内に、以下の記述を追加してください (※)。
   ```
   (setf lem-scheme-mode:*scheme-swank-server-run-command*
         '("gosh" "-AC:/work/r7rs-swank-Gauche-custom" "-e(begin (import (gauche-swank)) (start-swank ,port))"))
@@ -100,4 +100,4 @@
 - 2020-1-27  v1.09 補完の候補のソートと重複除去を行うようにした
 
 
-(2020-1-27)
+(2020-1-29)
