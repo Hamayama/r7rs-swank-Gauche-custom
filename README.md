@@ -35,24 +35,24 @@
 ## 機能
 - 以下に機能の対応状況を示します。
   
-  |<div align="center">機能</div>|<div align="center">Lem エディタのコマンド</div>|<div align="center">r7rs-swank</div>|<div align="center">r7rs-swank-Gauche-custom</div>|
+  |<div align="center">機能</div>|<div align="center">Lem エディタのコマンド</div>|<div align="center">r7rs-swank</div>|<div align="center">r7rs-swank-<br>Gauche-custom</div>|
   |---|---|---|---|
-  |repl の起動           |M-x scheme-slime                          |○     |○(※1)|
-  |ファイルのロード<br>(repl へのロード)|M-x scheme-load-file (C-c C-l)|×(※2)|○     |
-  |シンボルの補完        |M-x indent-line-and-complete-symbol (Tab) |△(※3)|○     |
-  |autodoc による関数シグネチャ<br>のミニバッファへの自動表示|-     |△(※4)|△(※4)|
-  |マクロの展開          |M-x scheme-macroexpand-all (C-c M-m)      |△(※5)|△(※6)|
-  |describe による symbol の説明の表示|M-x scheme-describe-symbol (C-c C-d d)|△(※7)|△(※7)|
-  |apropos 関係          |-                                         |×     |×     |
-  |inspector 関係        |-                                         |×     |×     |
-  |debugger 関係         |-                                         |×     |×     |
-  |compile 関係          |-                                         |×     |×     |
-  |定義位置へのジャンプ  |M-x find-definition (M-.)                 |×     |△(※8)|
-  |参照情報の一覧表示 (xref?)|-                                     |×     |×     |
-  |ローカル環境の情報取得|-                                         |×     |×     |
-  |インデント情報の更新  |-                                         |×     |×     |
-  |カレントライブラリの切り換え|M-x scheme-set-library (C-c M-p)    |×     |△(※9)|
-  |repl の interrupt     |-                                         |×     |×     |
+  |repl の起動           |M-x scheme-slime                             |○      |○(※1) |
+  |ファイルのロード<br>(repl へのロード)|M-x scheme-load-file (C-c C-l)|×(※2) |○      |
+  |シンボルの補完        |M-x indent-line-and-complete-symbol (Tab)    |△(※3) |○      |
+  |autodoc による関数シグネチャの<br>ミニバッファへの自動表示|-        |△(※4)(※5)|△(※5)|
+  |マクロの展開          |M-x scheme-macroexpand-all (C-c M-m)         |△(※6) |△(※7) |
+  |describe による symbol の説明の表示|M-x scheme-describe-symbol (C-c C-d d)|△(※8)|△(※8)|
+  |apropos 関係          |-                                            |×      |×      |
+  |inspector 関係        |-                                            |×      |×      |
+  |debugger 関係         |-                                            |×      |×      |
+  |compile 関係          |-                                            |×      |×      |
+  |定義位置へのジャンプ  |M-x find-definition (M-.)                    |×      |△(※9) |
+  |参照情報の一覧表示 (xref?)|-                                        |×      |×      |
+  |ローカル環境の情報取得|-                                            |×      |×      |
+  |インデント情報の更新  |-                                            |×      |×      |
+  |カレントライブラリの切り換え|M-x scheme-set-library (C-c M-p)       |×      |△(※10)|
+  |repl の interrupt     |-                                            |×      |×      |
   
   ○:対応  
   △:問題あり  
@@ -61,12 +61,13 @@
   (※1) ,a 等のトップレベルコマンドも使用可能  
   (※2) 現状、バグがあり Gauche では動作しない ( https://github.com/ecraven/r7rs-swank/pull/11 )  
   (※3) 補完の候補がソートされない。また、重複した項目が表示されることがある  
-  (※4) Gauche の拡張シグネチャ ( :optional :key :rest ) には未対応  
-  (※5) 結果が1行になるので見にくい  
-  (※6) pprint の結果を受け取ることで、ある程度改行されるようになった  
-  (※7) 説明は表示されないが、bind 情報だけは表示される  
-  (※8) 一部のグローバルな手続きのみ対応 (プリコンパイルされたものは不可)  
-  (※9) repl バッファのみ対応。入力は R7RS 形式 (最外の括弧は省略可) と Gauche のモジュール (ドット区切り) の両方を受け付ける
+  (※4) シグネチャの取得に失敗してエラーが表示されることがある  
+  (※5) Gauche の拡張シグネチャ ( :optional :key :rest ) には未対応  
+  (※6) 結果が1行になるので見にくい  
+  (※7) pprint の結果を受け取ることで、ある程度改行されるようになった  
+  (※8) 説明は表示されないが、bind 情報だけは表示される  
+  (※9) 一部のグローバルな手続きのみ対応 (プリコンパイルされたものは不可)  
+  (※10) repl バッファのみ対応。入力は R7RS 形式 (最外の括弧は省略可) と Gauche のモジュール (ドット区切り) の両方を受け付ける
 
 
 ## 参考情報
