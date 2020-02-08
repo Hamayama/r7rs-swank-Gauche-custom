@@ -106,7 +106,10 @@
         (apply values x)))))
 
 (define ($function-parameters-and-documentation name)
-  (let* ((binding (car (interactive-eval (string->symbol name))))
+  (let* (;; for Gauche custom
+         ;(binding (car (interactive-eval (string->symbol name))))
+         (binding (guard (e (else #f))
+                    (car (interactive-eval (string->symbol name)))))
          (parameters (if (and binding
                               (eq? <procedure> (class-of binding)))
                          (ref binding 'info)
