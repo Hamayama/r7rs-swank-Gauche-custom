@@ -312,17 +312,49 @@ The secondary value indicates the absence of an entry."
             #f))))
 
 (define (wrap-item/index lst index before-marker after-marker)
-  (let loop ((i 0)
-             (lst lst))
-    (cond ((null? (cdr lst))
-           (list before-marker (car lst) after-marker))
-          ((member (car lst) '(!rest !optional))
-           (cons (car lst) (loop i (cdr lst))))
-          ((= i index)
-           (append (list before-marker (car lst) after-marker) (cdr lst)))
-          (else
-           (cons (car lst)
-                 (loop (+ i 1) (cdr lst)))))))
+  ;; for Gauche custom
+  (cond-expand
+   (gauche
+    (define not-available #f)
+    (define (set-not-available) (set! not-available #t) '())
+    (define rest-flag #f)
+    (define lst0 lst)
+    (define lst1
+      (let loop ((i 0)
+                 (lst lst))
+        ;; support :key :rest :optional
+        (cond ((member (car lst) '(:key))
+               (set-not-available))
+              ((member (car lst) '(!rest :rest))
+               (set! rest-flag #t)
+               (if (>= (length (cdr lst)) 2)
+                 (set-not-available)
+                 (cons (car lst) (loop i (cdr lst)))))
+              ((member (car lst) '(!optional :optional))
+               (if rest-flag
+                 (set-not-available)
+                 (cons (car lst) (loop i (cdr lst)))))
+              ((= i index)
+               (append (list before-marker (car lst) after-marker) (cdr lst)))
+              ((null? (cdr lst))
+               (if rest-flag
+                 (list before-marker (car lst) after-marker)
+                 (set-not-available)))
+              (else
+               (cons (car lst) (loop (+ i 1) (cdr lst)))))))
+    (if not-available lst0 lst1))
+   (else
+    (let loop ((i 0)
+               (lst lst))
+      (cond ((null? (cdr lst))
+             (list before-marker (car lst) after-marker))
+            ((member (car lst) '(!rest !optional))
+             (cons (car lst) (loop i (cdr lst))))
+            ((= i index)
+             (append (list before-marker (car lst) after-marker) (cdr lst)))
+            (else
+             (cons (car lst)
+                   (loop (+ i 1) (cdr lst)))))))))
 
 (define (with-output-to-string thunk)
   (let ((o (open-output-string)))

@@ -23,6 +23,7 @@
                 sys-getpid gauche-version
                 report-error string-scan
                 sort delete-duplicates
+                class-name
                 ;; for Gauche custom (postlude)
                 with-module
                 with-input-from-port consume-trailing-whitespaces)

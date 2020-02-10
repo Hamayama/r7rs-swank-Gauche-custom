@@ -106,14 +106,23 @@
         (apply values x)))))
 
 (define ($function-parameters-and-documentation name)
-  (let* (;; for Gauche custom
-         ;(binding (car (interactive-eval (string->symbol name))))
-         (binding (guard (e (else #f))
+  ;; for Gauche custom
+  ;(let* ((binding (car (interactive-eval (string->symbol name))))
+  ;       (parameters (if (and binding
+  ;                            (eq? <procedure> (class-of binding)))
+  ;                       (ref binding 'info)
+  ;                       #f)))
+  ;  (cons parameters #f)))
+  (let* ((binding (guard (e (else #f))
                     (car (interactive-eval (string->symbol name)))))
-         (parameters (if (and binding
-                              (eq? <procedure> (class-of binding)))
-                         (ref binding 'info)
-                         #f)))
+         (parameters (and binding
+                          (case (class-name (class-of binding))
+                            ((<procedure>)
+                             (ref binding 'info))
+                            ((<syntax> <macro> <generic>)
+                             `(,binding))
+                            (else
+                             #f)))))
     (cons parameters #f)))
 
 (define env (interaction-environment))
