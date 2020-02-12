@@ -18,9 +18,10 @@
 - そして、Lem エディタの設定ファイル ~/.lem/init.lisp 内に、以下の記述を追加してください (※)。
   ```
   (setf lem-scheme-mode:*scheme-swank-server-run-command*
-        '("gosh" "-AC:/work/r7rs-swank-Gauche-custom" "-e(begin (import (gauche-swank)) (start-swank ,port))"))
+        '("gosh" "-r7" "-AC:/work/r7rs-swank-Gauche-custom"
+          "-e(begin (import (gauche-swank)) (start-swank ,port))"))
   ```
-  **(※) 上記設定の -A オプションの部分には、展開したフォルダのパスを指定してください。**
+  **(※) 上記設定の -A オプションの部分には、本ソースを展開したフォルダのパスを指定してください。**
 
 
 ## 使い方
@@ -82,6 +83,24 @@
    https://gist.github.com/Hamayama/03eb1c2984abc2ddb7a1c04d15e1bd32
 
 
+3. Emacs での使用について (実験中)  
+   事前に Emacs, SLIME および Gauche が、適切にインストールされている必要があります。  
+   Emacs の設定ファイル init.el 内に、以下の記述を追加してください (※)。
+   ```
+   ;; ***** r7rs-swank *****
+   (defun gauche-scheme-start-swank (file encoding)
+     (format "%S\n\n" `(begin (import (gauche-swank)) (start-swank ,file))))
+   (setq slime-lisp-implementations
+         (cons '(gauche-scheme ("gosh" "-r7" "-AC:/work/r7rs-swank-Gauche-custom")
+                               :init gauche-scheme-start-swank)
+               slime-lisp-implementations))
+   (add-hook 'scheme-mode-hook '(lambda () (slime-mode t)))
+   ```
+   **(※) 上記設定の -A オプションの部分には、本ソースを展開したフォルダのパスを指定してください。**  
+   Emacs を起動して、M-x slime を実行すると、  
+   r7rs-swank server が起動して、repl のバッファが表示されます。
+
+
 ## 環境等
 - OS
   - Windows 8.1 (64bit)
@@ -106,6 +125,7 @@
 - 2020-2-8   v1.10 autodoc のシグネチャ検出のエラーチェックを追加
 - 2020-2-10  v1.11 autodoc の表示改善
 - 2020-2-12  v1.12 find-definitionsの応答を修正。ライブラリ名のリストのソートを追加
+- 2020-2-12  v1.13 マクロの展開の出力見直し
 
 
 (2020-2-12)
