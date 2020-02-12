@@ -63,7 +63,7 @@
 (define ($all-package-names)
   ;; for Gauche custom
   ;(map module-name (all-modules)))
-  (map $environment-name (all-modules)))
+  (sort (map $environment-name (all-modules)) string<?))
 
 (define (display-to-string val)
   (let ((out (open-output-string)))

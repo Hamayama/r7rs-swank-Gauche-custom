@@ -392,7 +392,7 @@
                (s-lines (cadr sinfo)))
           (if (equal? s-dname ".")
             `((,name (:error "not found")))
-            `((,name (:location (:buffer-and-file ,s-fname ,s-fpath) (:line ,s-lines 0) 0)))))
+            `((,name (:location (:buffer-and-file ,s-fname ,s-fpath) (:line ,s-lines 0) ())))))
         `((,name (:error "not found")))))))
  (else))
 
