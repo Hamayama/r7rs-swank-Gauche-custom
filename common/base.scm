@@ -241,10 +241,18 @@ The secondary value indicates the absence of an entry."
               (swank-convert-to-image ((cdr c) value) type)
               (loop (cdr cs)))))))
 
-(define (write-to-string val)
-  (let ((o (open-output-string)))
-    (write val o)
-    (get-output-string o)))
+;; for Gauche custom
+(cond-expand
+ (gauche
+  (define (write-to-string val . rest)
+    (if (and (pair? rest) (eq? (car rest) 'pprint))
+      (with-output-to-string (lambda () (pprint val)))
+      (with-output-to-string (lambda () (write  val))))))
+ (else
+  (define (write-to-string val)
+    (let ((o (open-output-string)))
+      (write val o)
+      (get-output-string o)))))
 
 (define (read-from-string str)
   (read (open-input-string str)))

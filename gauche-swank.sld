@@ -47,13 +47,13 @@
     ;;    server host name or ip address string
     ;;  *macroexpand-result*
     ;;    #f       : return normal result
-    ;;    'string  : return string literal made by pprint
+    ;;    'pprint  : return pprint result
     ;;  *error-output-type*
     ;;    #f       : output only error-message
     ;;    'report  : use report-error
     ;;    'report2 : use report-error without stack-trace
     (define *server-host-name*   "127.0.0.1")
-    (define *macroexpand-result* 'string)
+    (define *macroexpand-result* 'pprint)
     (define *error-output-type*  'report2)
     )
 

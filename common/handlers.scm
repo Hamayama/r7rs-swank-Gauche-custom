@@ -363,27 +363,21 @@
     't))
 
 (define-slime-handler (swank:swank-expand-1 form)
-  ;; for Gauche custom
-  (cond-expand
-   (gauche
-    (let ((v (read-from-string form)))
-      (if (eq? *macroexpand-result* 'string)
-        ($macroexpand-1 v)
-        (write-to-string ($macroexpand-1 v)))))
-   (else
-    (let ((v (read-from-string form)))
+  (let ((v (read-from-string form)))
+    ;; for Gauche custom
+    (cond-expand
+     (gauche
+      (write-to-string ($macroexpand-1 v) *macroexpand-result*))
+     (else
       (write-to-string ($macroexpand-1 v))))))
 
 (define-slime-handler (swank:swank-macroexpand-all form)
-  ;; for Gauche custom
-  (cond-expand
-   (gauche
-    (let ((v (read-from-string form)))
-      (if (eq? *macroexpand-result* 'string)
-        ($macroexpand-all v)
-        (write-to-string ($macroexpand-all v)))))
-   (else
-    (let ((v (read-from-string form)))
+  (let ((v (read-from-string form)))
+    ;; for Gauche custom
+    (cond-expand
+     (gauche
+      (write-to-string ($macroexpand-all v) *macroexpand-result*))
+     (else
       (write-to-string ($macroexpand-all v))))))
 
 (define-slime-handler (swank:inspect-current-condition)

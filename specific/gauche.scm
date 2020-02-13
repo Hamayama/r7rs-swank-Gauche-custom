@@ -34,20 +34,10 @@
   (x->string (module-name->library-name (module-name env))))
 
 (define ($macroexpand-1 form)
-  ;; for Gauche custom
-  ;(macroexpand-1 form))
-  (if (eq? *macroexpand-result* 'string)
-    (with-output-to-string
-      (lambda () (pprint (macroexpand-1 form))))
-    (macroexpand-1 form)))
+  (macroexpand-1 form))
 
 (define ($macroexpand-all form)
-  ;; for Gauche custom
-  ;(macroexpand-all form))
-  (if (eq? *macroexpand-result* 'string)
-    (with-output-to-string
-      (lambda () (pprint (macroexpand-all form))))
-    (macroexpand-all form)))
+  (macroexpand-all form))
 
 (define ($open-tcp-server port-number port-file handler)
   (let* ((n (or port-number (+ 10000 (random-integer 50000))))
