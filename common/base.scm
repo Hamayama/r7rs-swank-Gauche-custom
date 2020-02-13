@@ -16,15 +16,35 @@
                         (lambda (key value)
                           (hash-table-delete! table key))))
 
+;; for Gauche custom
+(cond-expand
+ (gauche
+  (define (%read port)
+    ;; support toplevel commands (e.g. ,a)
+    (with-input-from-port port
+      ((with-module gauche.interactive make-repl-reader)
+       read
+       (lambda ()
+         (let ((line (read-line)))
+           (if (eof-object? line) "" line)))
+       consume-trailing-whitespaces))))
+ (else
+  (define %read read)))
 
 (define (read-all port)
   "Read forms from port until eof, return a list"
   (let loop ((result '())
-             (form (read port)))
+             ;; for Gauche custom
+             ;(form (read port))
+             (form (%read port))
+             )
     (if (eof-object? form)
         (reverse result)
         (loop (cons form result)
-              (read port)))))
+              ;; for Gauche custom
+              ;(read port)
+              (%read port)
+              ))))
 (define (read-packet port)
   "Read 6 byte ascii hex length, then length bytes, all utf-8"
   (let* ((length (string->number (utf8->string (read-bytevector 6 port)) 16))

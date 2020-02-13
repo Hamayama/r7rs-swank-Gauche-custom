@@ -1,6 +1,6 @@
 ;;
 ;; gauche-swank.sld
-;; 2019-12-9 v1.06
+;; 2020-2-13 v1.16
 ;;
 ;; customized for Gauche ( https://github.com/Hamayama/r7rs-swank-Gauche-custom )
 ;; ( the original is https://github.com/ecraven/r7rs-swank )
@@ -24,7 +24,6 @@
                 report-error string-scan
                 sort delete-duplicates
                 class-name
-                ;; for Gauche custom (postlude)
                 with-module
                 with-input-from-port consume-trailing-whitespaces)
           (rename (scheme base) (symbol->string scheme:symbol->string))
@@ -59,5 +58,4 @@
 
   (include "specific/gauche.scm")
   (include "common/base.scm")
-  (include "common/handlers.scm")
-  (include "specific/gauche-postlude.scm"))
+  (include "common/handlers.scm"))
