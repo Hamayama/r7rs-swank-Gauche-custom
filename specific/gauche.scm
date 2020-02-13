@@ -116,10 +116,8 @@
     (cons parameters #f)))
 
 (define env (interaction-environment))
-
 (define ($environment name)
-  ;; for Gauche custom
-  ;;  name might be #f
+  ;; we don't use name
   env)
 
 (define ($set-package name)
