@@ -1,6 +1,6 @@
 ;;
 ;; gauche-swank.sld
-;; 2020-2-13 v1.16
+;; 2020-2-15 v1.17
 ;;
 ;; customized for Gauche ( https://github.com/Hamayama/r7rs-swank-Gauche-custom )
 ;; ( the original is https://github.com/ecraven/r7rs-swank )

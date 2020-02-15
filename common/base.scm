@@ -362,6 +362,9 @@ The secondary value indicates the absence of an entry."
                (if rest-flag
                  (set-not-available)
                  (cons (car lst) (loop i (cdr lst)))))
+              ((number? (car lst))
+               ;; for case-lambda (e.g. ~)
+               (set-not-available))
               ((= i index)
                (append (list before-marker (car lst) after-marker) (cdr lst)))
               ((null? (cdr lst))
