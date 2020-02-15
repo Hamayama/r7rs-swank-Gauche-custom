@@ -62,7 +62,10 @@
    (else
     (list "(user)" "(user)"))))
 
-(define-slime-handler (swank-repl:listener-eval form)
+;; for Gauche custom
+;;  for now, we ignore :window-width argument
+;(define-slime-handler (swank-repl:listener-eval form)
+(define-slime-handler (swank-repl:listener-eval form . rest)
   (let* ((form (replace-readtime-lookup-presented-object-or-lose form))
 	 (results ($output-to-repl (lambda () (interactive-eval (cons 'begin (read-all (open-input-string form))))))))
     (for-each (lambda (val)

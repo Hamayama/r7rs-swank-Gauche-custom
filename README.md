@@ -131,6 +131,7 @@
 - 2020-2-13  v1.15 コメント修正のみ
 - 2020-2-13  v1.16 gauche-postlude.scmを削除
 - 2020-2-15  v1.17 autodocの表示改善(case-lambda手続きのハイライト表示OFF)
+- 2020-2-15  v1.18 ハンドラ修正(swank-repl:listener-eval)
 
 
 (2020-2-15)
