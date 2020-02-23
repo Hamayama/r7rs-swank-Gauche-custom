@@ -1,6 +1,6 @@
 ;;
 ;; gauche-swank.sld
-;; 2020-2-15 v1.18
+;; 2020-2-23 v1.19
 ;;
 ;; customized for Gauche ( https://github.com/Hamayama/r7rs-swank-Gauche-custom )
 ;; ( the original is https://github.com/ecraven/r7rs-swank )
@@ -55,6 +55,10 @@
     (define *macroexpand-result* 'pprint)
     (define *error-output-type*  'report2)
     )
+
+  ;; for Gauche custom
+  (begin
+    (with-module user (import gauche.interactive)))
 
   (include "specific/gauche.scm")
   (include "common/base.scm")
