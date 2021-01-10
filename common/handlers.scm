@@ -17,28 +17,15 @@
                  ,id)))))
 
 (define-slime-handler (swank:connection-info)
-  ;; for Gauche custom
-  (cond-expand
-   (gauche
-    `(:pid ,(sys-getpid)
-           :style :spawn
-           :encoding (:coding-systems ("utf-8-unix"))
-           :lisp-implementation (:type "Scheme" :name ,($scheme-name) :version ,(gauche-version) :program "gosh")
-           :machine (:instance "host" :type "X86-64")
-           :features (:swank)
-           :modules ("SWANK-ARGLISTS" "SWANK-REPL" "SWANK-PRESENTATIONS")
-           :package (:name ,($environment-name ($environment #f)) :prompt ,($environment-name ($environment #f)))
-           :version "2.24"))
-   (else
-    `(:pid 123
-           :style :spawn
-           :encoding (:coding-systems ("utf-8-unix"))
-           :lisp-implementation (:type "Scheme" :name ,($scheme-name) :version 123 :program "/usr/bin/scheme")
-           :machine (:instance "host" :type "X86-64")
-           :features (:swank)
-           :modules ("SWANK-ARGLISTS" "SWANK-REPL" "SWANK-PRESENTATIONS")
-           :package (:name "(user)" :prompt "(user)")
-           :version "2.24"))))
+  `(:pid 123
+         :style :spawn
+         :encoding (:coding-systems ("utf-8-unix"))
+         :lisp-implementation (:type "Scheme" :name ,($scheme-name) :version 123 :program "/usr/bin/scheme")
+         :machine (:instance "host" :type "X86-64")
+         :features (:swank)
+         :modules ("SWANK-ARGLISTS" "SWANK-REPL" "SWANK-PRESENTATIONS")
+         :package (:name "(user)" :prompt "(user)")
+         :version "2.24"))
 
 (define-slime-handler (swank:swank-require packages)
   '())
@@ -55,17 +42,9 @@
   (swank:lookup-presented-object num))
 
 (define-slime-handler (swank-repl:create-repl . args)
-  ;; for Gauche custom
-  (cond-expand
-   (gauche
-    (list ($environment-name ($environment #f)) ($environment-name ($environment #f))))
-   (else
-    (list "(user)" "(user)"))))
+  (list "(user)" "(user)"))
 
-;; for Gauche custom
-;;  for now, we ignore :window-width argument
-;(define-slime-handler (swank-repl:listener-eval form)
-(define-slime-handler (swank-repl:listener-eval form . rest)
+(define-slime-handler (swank-repl:listener-eval form)
   (let* ((form (replace-readtime-lookup-presented-object-or-lose form))
 	 (results ($output-to-repl (lambda () (interactive-eval (cons 'begin (read-all (open-input-string form))))))))
     (for-each (lambda (val)
@@ -367,21 +346,11 @@
 
 (define-slime-handler (swank:swank-expand-1 form)
   (let ((v (read-from-string form)))
-    ;; for Gauche custom
-    (cond-expand
-     (gauche
-      (write-to-string ($macroexpand-1 v) *macroexpand-result*))
-     (else
-      (write-to-string ($macroexpand-1 v))))))
+    (write-to-string ($macroexpand-1 v))))
 
 (define-slime-handler (swank:swank-macroexpand-all form)
   (let ((v (read-from-string form)))
-    ;; for Gauche custom
-    (cond-expand
-     (gauche
-      (write-to-string ($macroexpand-all v) *macroexpand-result*))
-     (else
-      (write-to-string ($macroexpand-all v))))))
+    (write-to-string ($macroexpand-all v))))
 
 (define-slime-handler (swank:inspect-current-condition)
   (inspect-object (param:active-condition)))
@@ -391,25 +360,3 @@
 
 (define-slime-handler (swank::describe-to-string object)
   (object-documentation (write-to-string object) (interactive-eval object)))
-
-;; for Gauche custom
-(cond-expand
- (gauche
-  (define-slime-handler (swank:find-definitions-for-emacs name)
-    (let ((sinfo (guard (e (else #f))
-                   (source-location (binding-value (string->symbol name))))))
-      (if sinfo
-        (let* ((s-fpath (car sinfo))
-               (s-dname (sys-dirname  s-fpath))
-               (s-fname (sys-basename s-fpath))
-               (s-lines (cadr sinfo)))
-          (if (equal? s-dname ".")
-            `((,name (:error "not found")))
-            `((,name (:location (:buffer-and-file ,s-fname ,s-fpath) (:line ,s-lines 0) ())))))
-        `((,name (:error "not found")))))))
- (else))
-
-;; for Gauche custom
-(define-slime-handler (swank:interactive-eval-region form)
-  ((find-handler 'swank:interactive-eval) form))
-
